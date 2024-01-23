@@ -1,0 +1,1 @@
+cd server && nodemon start
