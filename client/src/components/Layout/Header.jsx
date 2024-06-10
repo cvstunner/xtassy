@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {useState} from 'react';
 import {Link, NavLink, useNavigate} from 'react-router-dom';
 import {BiSearch} from 'react-icons/bi';
@@ -14,10 +14,46 @@ const Header = () => {
   const [auth, setAuth] = useAuth();
   const [prompt, setPrompt] = useState(false);
   const categories = useCategory(); 
+  const [catgs, setCatgs] = useState({
+    "Ladies": {},
+    "Mens": {},
+    "Kids": {},
+    "Sassy": {},
+  });
 
   function togglePop(){
     setSeen(!seen);
   }
+
+  useEffect(() => {
+    // console.log(categories);
+    categories.forEach((ele) => {
+      let _id = ele._id;
+      let name = ele.name;
+      let title = ele.title;
+      let sub_title = ele.sub_title;
+      // console.log(catgs?.[ele.name])
+      if (catgs?.[ele.name]?.[ele.title] !== undefined) {
+        catgs?.[name]?.[title]?.push([_id, sub_title]);
+        setCatgs(
+          {
+            ...catgs,
+          },
+        );
+      } else {
+        catgs[name][title] = [[_id, sub_title]];
+        setCatgs(
+          {
+            ...catgs,
+          },
+        );
+      }
+    });
+  }, [categories]);
+
+  useEffect(() => {
+    // console.log(catgs);
+  }, [catgs]);
 
   const closePrompt = () => setPrompt(false);
 
@@ -83,45 +119,11 @@ const Header = () => {
 		                    </Link>
 		                  </li>
 	                  	{
-											categories?.map((ele) => (
 		                    <li className="nav-catg-items">
-		                      <Link className="dropdown-item" to={`/category/${ele.slug}`}>
-		                        {ele.name}
+		                      <Link className="dropdown-item" to={`/category/`}>
+		                        {/* {ele.name} */}
 		                      </Link>
 		                    </li>
-		                  ))
-											}
-										</ul>
-										<ul className="p-0" type="none">
-		                  <li className="nav-catg-items">
-		                    <Link className="dropdown-item" to={"/categories"}>
-		                      All Categories
-		                    </Link>
-		                  </li>
-	                  	{
-											categories?.map((ele) => (
-		                    <li className="nav-catg-items">
-		                      <Link className="dropdown-item" to={`/category/${ele.slug}`}>
-		                        {ele.name}
-		                      </Link>
-		                    </li>
-		                  ))
-											}
-										</ul>
-										<ul className="p-0" type="none">
-		                  <li className="nav-catg-items">
-		                    <Link className="dropdown-item d-flex" to={"/categories"}>
-		                      All Categories
-		                    </Link>
-		                  </li>
-	                  	{
-											categories?.map((ele) => (
-		                    <li className="nav-catg-items">
-		                      <Link className="dropdown-item" to={`/category/${ele.slug}`}>
-		                        {ele.name}
-		                      </Link>
-		                    </li>
-		                  ))
 											}
 										</ul>
 									</ul>
