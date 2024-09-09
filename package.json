@@ -1,0 +1,32 @@
+{
+  "name": "xtassy",
+  "version": "0.1.0",
+  "author": "@cvstunner",
+  "private": true,
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_OPTIONS=--openssl-legacy-provider webpack",
+    "server": "cd ./server && nodemon index.js",
+    "client": "npm start --prefix ./client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 firefox version",
+      "last 1 chrome version",
+      "last 1 safari version"
+    ]
+  }
+}

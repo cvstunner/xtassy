@@ -3,13 +3,13 @@ let catgs = {
     "Winter Collection": ["Sweaters"]
   },
   "Mens": {
-    "Winter Collection": ["Sweatshirts"]
+    "Winter Collection": ["Sweatshirts", "Sweaters", "Krators"]
   },
   "Kids": {
 
   },
   "Sassy": {
-
+    "chetan": ["live", "ghosty"]
   }
 }
 
@@ -22,4 +22,10 @@ Object.assign(catgs, {
 
 // console.log(Object.keys(catgs["Kids"]).some(key => key === "Kidos"))
 
-console.log(catgs["Kids"]?.["Kidos"])
+catgs["Mens"]?.["Winter Collection"].map((sub_title) => {
+  console.log(sub_title)
+})
+
+catgs["Mens"]?.["Winter Collection"].map((sub_title) => {
+  console.log(sub_title)
+})

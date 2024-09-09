@@ -1,0 +1,58 @@
+* Notes
+ ** title
+ ** name
+
+* Structure
+    @code js
+
+    let res = {
+      name: {
+        title: [[]]
+      }
+    }
+
+    @end
+
+* Code
+    @code html
+
+    <div class="ladies">
+      <div class="left-col">
+        <div>
+          <h2 class="title"></h2>
+          <div>
+            <p class="name"></p>
+            <p class="name"></p>
+            <p class="name"></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="title"></h2>
+          <div>
+            <p class="name"></p>
+            <p class="name"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div>
+          <h2 class="title"></h2>
+          <div>
+            <p class="name"></p>
+            <p class="name"></p>
+          </div>
+        </div>
+        <div>
+          <h2 class="title"></h2>
+          <div>
+            <p class="name"></p>
+            <p class="name"></p>
+            <p class="name"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @end
+

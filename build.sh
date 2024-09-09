@@ -1,1 +1,0 @@
-nvim -c --headless vsplit
