@@ -14,12 +14,7 @@ const Header = () => {
   const [auth, setAuth] = useAuth();
   const [prompt, setPrompt] = useState(false);
   const categories = useCategory();
-  const [catgs, setCatgs] = useState({
-    "Ladies": {},
-    "Mens": {},
-    "Kids": {},
-    "Sassy": {},
-  });
+  const [catgs, setCatgs] = useState({});
 
   function togglePop() {
     setSeen(!seen);
@@ -28,7 +23,7 @@ const Header = () => {
   const groupCatgs = (data) => {
     const groupedCatgs = {};
 
-    data.forEach(item => {
+    data?.forEach(item => {
       if (!groupedCatgs[item.name])
         groupedCatgs[item.name] = {};
 
@@ -41,37 +36,30 @@ const Header = () => {
     return groupedCatgs;
   };
 
+  const populateCatgs = (nameKey) => {
+    if (!catgs || !catgs[nameKey])
+      return null;
+
+    return (<div className="w-100 h-100 d-flex flex-column flex-wrap">
+      {Object.keys(catgs[nameKey]).map((titleKey, titleIndex) => (
+        <div className="catgs-ele-wrpr w-50 mt-4" key={titleKey}>
+          <h5 className='mb-0 fw-bold' style={{ fontSize: "1.15em" }}>{titleKey}</h5>
+          <div className="d-flex flex-column">
+            {catgs[nameKey][titleKey].map((ele, subIndex) => ele[0] != -1 && ele[1] != -1 ? (
+              <div>
+                <p className="mb-0">{ele[1]}</p>
+              </div>
+            ) : (<></>))}
+          </div>
+        </div>
+      ))}
+
+    </div>)
+  }
+
   useEffect(() => {
     setCatgs(groupCatgs(categories));
-
-    // console.log(categories);
-    // categories.forEach((ele) => {
-    //   let _id = ele._id;
-    //   let name = ele.name;
-    //   let title = ele.title;
-    //   let sub_title = ele.sub_title;
-    //   // console.log(catgs?.[ele.name])
-    //   if (catgs?.[ele.name]?.[ele.title] !== undefined) {
-    //     catgs?.[name]?.[title]?.push([_id, sub_title]);
-    //     setCatgs(
-    //       {
-    //         ...catgs,
-    //       },
-    //     );
-    //   } else {
-    //     catgs[name][title] = [[_id, sub_title]];
-    //     setCatgs(
-    //       {
-    //         ...catgs,
-    //       },
-    //     );
-    //   }
-    // });
   }, [categories]);
-
-  useEffect(() => {
-    // console.log(catgs);
-  }, [catgs]);
 
   const closePrompt = () => setPrompt(false);
 
@@ -107,70 +95,36 @@ const Header = () => {
               <li className="nav-item d-flex align-items-end">
                 <Link className="nav-link dropdown nav-catg-dropdown ps-3 pe-3 tex-dark" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                   LADIES
-                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0">
-                    <li className="nav-catg-items ps-3 pe-3">
-                      <Link className="dropdown-item d-flex flex-coloum justify-content-center" to={"/categories"}>
-                        All Categories
-                      </Link>
-                    </li>
-                    {
-                      categories?.map((ele) => (
-                        <li className="nav-catg-items ps-3 pe-3">
-                          <Link className="dropdown-item d-flex flex-coloum justify-content-center" to={`/category/${ele.slug}`}>
-                            {ele.name}
-                          </Link>
-                        </li>
-                      ))
-                    }
+                  <div className="p-5 pb-2 position-absolute top-0 start-0 d-none"></div>
+                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0 pt-3 pb-3 ps-5 pe-5">
+                    {populateCatgs("Ladies")}
                   </ul>
                 </Link>
               </li>
               <li className="nav-item d-flex align-items-end">
                 <Link className="nav-link dropdown nav-catg-dropdown ps-3 pe-3 tex-dark" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                   MENS
-                  <div className="container pb-4 position-absolute start-0"></div>
-                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-start m-0 pt-4 pb-3 ps-3 pe-3 justify-content-around">
-                    <ul className="p-0" type="none">
-                      <li className="nav-catg-items">
-                        <Link className="dropdown-item" to={"/categories"}>
-                          All Categories
-                        </Link>
-                      </li>
-                      {
-                        <li className="nav-catg-items">
-                          <Link className="dropdown-item" to={`/category/`}>
-                            {/* {ele.name} */}
-                          </Link>
-                        </li>
-                      }
-                    </ul>
+
+                  <div className="p-5 pb-2 position-absolute top-0 start-0 d-none"></div>
+                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0 pt-3 pb-3 ps-5 pe-5">
+                    {populateCatgs("Mens")}
                   </ul>
                 </Link>
               </li>
               <li className="nav-item d-flex align-items-end">
                 <Link className="nav-link dropdown nav-catg-dropdown ps-3 pe-3 tex-dark" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                   KIDS
-                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0">
-                    <li className="nav-catg-items ps-3 pe-3">
-                      <Link className="dropdown-item d-flex flex-coloum justify-content-center" to={"/categories"}>
-                        All Categories
-                      </Link>
-                    </li>
-                    {
-                      categories?.map((ele) => (
-                        <li className="nav-catg-items ps-3 pe-3">
-                          <Link className="dropdown-item d-flex flex-coloum justify-content-center" to={`/category/${ele.slug}`}>
-                            {ele.name}
-                          </Link>
-                        </li>
-                      ))
-                    }
+                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0 pt-3 pb-3 ps-5 pe-5">
+                    {populateCatgs("Kids")}
                   </ul>
                 </Link>
               </li>
               <li className="nav-item d-flex align-items-end">
                 <Link className="nav-link dropdown nav-catg-dropdown ps-3 pe-3 tex-dark" type="button" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                   SASSY
+                  <ul className="dropdown-menu nav-catg-dropdown-menu rounded-top-0 align-items-center mt-0 pt-3 pb-3 ps-5 pe-5">
+                    {populateCatgs("Sassy")}
+                  </ul>
                 </Link>
               </li>
             </ul>

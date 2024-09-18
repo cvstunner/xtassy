@@ -5,37 +5,67 @@ import fs from 'fs';
 
 export const createProduct = async (req, res) => {
   try {
-    const { name, category, description, quantity, MRP, price, shipping } = req.fields;
-    const { photo } = req.files;
+    const { name, category, description, MRP, price, shipping } = req.fields;
+
+    const sizes = JSON.parse(req.fields.sizes);
+    const photos = req.files.photos;
+    const photoIndices = JSON.parse(req.fields.photoIndices);
+
+    console.log("photoIndices: ", photoIndices)
 
     switch (true) {
       case !name:
-        return res.status(500).send({ error: 'Name is Required!' });
+        return res.status(400).send({ message: 'Name is Required!' });
       case !category:
-        return res.status(500).send({ error: 'Category is Required!' });
+        return res.status(400).send({ message: 'Category is Required!' });
       case !description:
-        return res.status(500).send({ error: 'Description is Required!' });
-      case !quantity:
-        return res.status(500).send({ error: 'Quantity is Required!' });
+        return res.status(400).send({ message: 'Description is Required!' });
+      case !sizes:
+        return res.status(400).send({ message: 'Sizes is Required!' });
       case !MRP:
-        return res.status(500).send({ error: 'MRP is Required!' });
+        return res.status(400).send({ message: 'MRP is Required!' });
       case !price:
-        return res.status(500).send({ error: 'Price is Required!' });
-      case !photo || (photo && photo.size > 1000000):
-        return res.status(500).send({ error: 'Photo is Required and should be less then 1mb!' });
+        return res.status(400).send({ message: 'Price is Required!' });
+      case !photos:
+        return res.status(400).send({ message: 'Minimum 1 Photo is Required!' });
+    }
+
+    let mainPhoto = false;
+    photoIndices.forEach(data => {
+      if (data == 0)
+        mainPhoto = true;
+    });
+
+    if (!mainPhoto) {
+      console.log("photoIndicesError")
+      return res.status(400).send({ message: 'Main Photo is Required!' });
     }
 
     const slug = slugify(name);
-    const newProduct = new product({ ...req.fields, slug });
-    if (photo) {
-      newProduct.photo.data = fs.readFileSync(photo.path);
-      newProduct.photo.contentType = photo.type;
+    const newProduct = new product({ name, slug, category, description, MRP, price, sizes, shipping });
+
+    let photosBuff = {};
+    if (photoIndices.length == 1) {
+      photosBuff[0] = {
+        data: fs.readFileSync(photos.path),
+        contentType: photos.type
+      }
     }
+    else {
+      photoIndices.forEach((data, index) => {
+        photosBuff[data] = {
+          data: fs.readFileSync(photos[index].path),
+          contentType: photos.type
+        }
+      });
+    }
+
+    newProduct.photos = photosBuff;
+
     await newProduct.save();
     res.status(201).send({
       success: true,
       message: 'Product created Successfully!',
-      category: newProduct
     });
   }
   catch (error) {

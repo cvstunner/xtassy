@@ -1,0 +1,8 @@
+.scale-hover {
+  transition: transform 1s;
+  transform: scale(var(--show, 0));
+}
+
+.scale-hover:hover {
+  --show: 1;
+}

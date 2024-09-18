@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { Select } from "antd";
 const { Option } = Select;
 
-const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, setCategory, setQuantity, setShipping, setPhoto, id, name, dscpt, price, MRP, category, quantity, shipping, photo, handleUpdate, setPrompt}) => {
+const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, setCategory, setQuantity, setShipping, setPhoto, id, name, dscpt, price, MRP, category, quantity, shipping, photo, handleUpdate, setPrompt }) => {
   return (
     <>
       <div className="m-1 row">
         <div className="row ps-0 pe-0 d-flex justify-content-center">
-          <div className="col">                 
+          <div className="col">
             <div className="mb-3 create-product-wrpr update-product-wrpr">
               {
                 photo ? (
@@ -17,23 +17,23 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
                       src={URL.createObjectURL(photo)}
                       alt="product_photo"
                       height={"300px"}
-                      style={{borderRadius:"5px"}}
+                      style={{ borderRadius: "5px" }}
                       className="img img-responsive"
                     />
                   </div>
-                ):(
+                ) : (
                   <div className="text-center">
                     <img
                       src={`${process.env.REACT_APP_API}/api/v1/product/photo/${id}`}
                       alt="product_photo"
                       height={"300px"}
-                      style={{borderRadius:"5px"}}
+                      style={{ borderRadius: "5px" }}
                       className="img img-responsive"
                     />
                   </div>
                 )
               }
-            </div>   
+            </div>
             <div className="mb-3 ps-0 pe-0">
               <label className="btn btn-outline-secondary col-md-12">
                 {photo ? photo.name : "Upload Photo"}
@@ -47,7 +47,7 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
               </label>
             </div>
           </div>
-          <div className="col">   
+          <div className="col">
             <div className="mb-3">
               <input
                 type="text"
@@ -69,19 +69,19 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
                   {c.name}
                 </Option>
               ))}
-            </Select> 
+            </Select>
             <div className="mb-3">
               <textarea
                 type="text"
                 value={dscpt}
                 placeholder="write a description"
                 rows="7"
-                style={{resize:"none"}}
+                style={{ resize: "none" }}
                 className="form-control pb-2"
                 onChange={(e) => setDscpt(e.target.value)}
               />
             </div>
-            <div className="row">      
+            <div className="row">
               <div className="col">
                 <div className="mb-3">
                   <input
@@ -107,15 +107,15 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
             </div>
             <div className="row">
               <div className="col">
-                  <div className="mb-3">
-                    <input
-                      type="number"
-                      value={quantity}
-                      placeholder="Quantity"
-                      className="form-control"
-                      onChange={(e) => setQuantity(e.target.value)}
-                    />
-                  </div>
+                <div className="mb-3">
+                  <input
+                    type="number"
+                    value={quantity}
+                    placeholder="Quantity"
+                    className="form-control"
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
               </div>
               <div className="col ps-0">
                 <div className="mb-3">
@@ -124,7 +124,7 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
                     placeholder="Shipping"
                     size="small"
                     className="form-select mb-3"
-                    onChange={(value) => { setShipping(value); }}                     
+                    onChange={(value) => { setShipping(value); }}
                     value={shipping ? "Yes" : "No"}>
                     <Option value="0">No</Option>
                     <Option value="1">Yes</Option>
@@ -143,9 +143,9 @@ const UpdateProductForm = ({ categories, setName, setDscpt, setPrice, setMRP, se
                 </button>
               </div>
               <div className="col ps-0">
-                <button className="btn btn-danger container-fluid" type="button" onClick={() => {setPrompt(true);}}>
+                <button className="btn btn-danger container-fluid" type="button" onClick={() => { setPrompt(true); }}>
                   DELETE PRODUCTS
-                </button> 
+                </button>
               </div>
             </div>
           </div>
